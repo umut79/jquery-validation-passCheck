@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<!-- JQ -->
+<script 
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+  crossorigin="anonymous">
+</script>
+<!-- BS.4 JS -->
+<script 
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+  crossorigin="anonymous">
+</script>
+<script 
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+  crossorigin="anonymous">
+</script>
+<!-- plug-in -->
+<script 
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js" 
+  type="text/javascript">
+</script>
+<script 
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/additional-methods.min.js" 
+  type="text/javascript">
+</script>
+
+<form id="form_id" action="" method="post">
+  <div class="form-group row border-bottom border-gray py-1 mx-0 mb-1 ">
+    <div class="col-sm-4 pt-2 pb-1">Yeni Şifre </div>
+    <div class="col-sm-6">
+      <input type="password" class="form-control usr-sifre1" name="sifre1" />
+    </div>
+  </div>
+
+  <div class="form-group row border-bottom border-gray py-1 mx-0 mb-1 ">
+    <div class="col-sm-4 pt-2 pb-1">Yeni Şifre Tekrar </div>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" name="sifre2" />
+    </div>
+  </div>
+
+  <div class="form-group row border-bottom border-gray py-1 mx-0 mb-1 ">
+    <div class="col-sm-6 offset-sm-4">
+      <button type="submit" class="btn btn-sm btn-success" ><i class="fa fa-refresh"></i> Değiştir</button>
+    </div>
+  </div>
+</form>
+
+<script  type="text/javascript">
+$(function() {
+  //-- add method 
+  $.validator.addMethod("passcheck", function(value) {
+     return /^(?=.*[a-z])[A-Za-z0-9\d=!\-@._*]+$/.test(value) // consists of only these
+         && /[a-z]/.test(value) // has a lowercase letter
+         && /\d/.test(value) // has a digit
+  });
+  // validate
+  $('#form_id').validate({
+      errorClass: "help-block",
+      rules: {
+          sifre1: {
+              required: true,
+              minlength:6,
+              pwcheck: true
+          }, 
+          sifre2: {
+              required: true,
+              minlength:6,
+              equalTo: '.usr-sifre1'
+          }
+      },
+      messages: {          
+          sifre1: {
+            required: "Bu alan boş olamaz!",
+            minlength: "En az 6 karakter giriniz!",
+            pwcheck: "Zayıf şifre! Şifre harf ve rakamlardan oluşmalı, 6-16 karakter olmalı."
+          },
+          sifre2: {
+            required: "Bu alan boş olamaz!",
+            minlength: "En az 6 karakter giriniz!",
+            equalTo: "Şifreler eşleşmiyor! Lütfen kontrol ediniz."
+          }
+
+        },
+      highlight: function(e) {
+          $(e).closest(".form-group").addClass("has-error")
+      },
+      unhighlight: function(e) {
+          $(e).closest(".form-group").removeClass("has-error")
+      },
+
+      submitHandler: function (form) {
+          form.submit();
+       }
+   });
+});
+</script>
